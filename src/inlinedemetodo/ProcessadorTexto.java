@@ -13,10 +13,6 @@ package inlinedemetodo;
 public class ProcessadorTexto {
     
     public String processar(String texto) {
-        return formatarTexto(texto);
-    }
-    
-    private String formatarTexto(String texto) {
         return texto.trim().toLowerCase();
     }
 }

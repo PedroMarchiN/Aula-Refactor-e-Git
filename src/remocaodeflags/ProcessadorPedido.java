@@ -11,18 +11,15 @@ package remocaodeflags;
  * DICA: Flags tornam o código menos claro. Prefira métodos separados ou polimorfismo.
  */
 public class ProcessadorPedido {
-    
-    public void processar(Pedido pedido, boolean aplicarDesconto) {
-        double valor = pedido.getValor();
-        
-        if (aplicarDesconto) {
-            valor = valor * 0.9;
-            System.out.println("Desconto aplicado: " + valor);
-        } else {
-            System.out.println("Valor sem desconto: " + valor);
-        }
-        
+
+    public void processarComDesconto(Pedido pedido){
+        double valor = pedido.getValor() * 0.9;
+        System.out.println("Desconto com desconto: " + valor);
         pedido.setValor(valor);
+    }
+
+    public void processarSemDesconto(Pedido pedido){
+        System.out.println("Desconto sem desconto: " + pedido.getValor());
     }
 }
 

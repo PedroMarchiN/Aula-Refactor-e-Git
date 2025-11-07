@@ -5,7 +5,7 @@ package extracaodeclasses;
  * 
  * PROBLEMA: A classe Relatorio tem muitas responsabilidades: formatação, cálculo e impressão.
  * 
- * TAREFA: Extraia a lógica de formatação em uma classe separada chamada FormatadorRelatorio.
+ * TAREFA: Extraia a lógica de formatação numa classe separada chamada FormatadorRelatorio.
  * 
  * DICA: Quando uma classe tem muitas responsabilidades, extraia grupos relacionados
  * de dados e métodos em uma nova classe.
@@ -14,25 +14,19 @@ public class Relatorio {
     private String titulo;
     private String conteudo;
     private String rodape;
+    private FormatadorRelatorio formatador;
     
     public Relatorio(String titulo, String conteudo, String rodape) {
         this.titulo = titulo;
         this.conteudo = conteudo;
         this.rodape = rodape;
+        this.formatador = new FormatadorRelatorio();
     }
     
     public void imprimir() {
-        // Formatação do título
-        String tituloFormatado = "=== " + titulo.toUpperCase() + " ===";
-        System.out.println(tituloFormatado);
-        
-        // Formatação do conteúdo
-        String conteudoFormatado = "  " + conteudo.replace("\n", "\n  ");
-        System.out.println(conteudoFormatado);
-        
-        // Formatação do rodapé
-        String rodapeFormatado = "--- " + rodape + " ---";
-        System.out.println(rodapeFormatado);
+        formatador.formatarTitulo(titulo);
+        formatador.formatarConteudo(conteudo);
+        formatador.formatarRodape(rodape);
     }
     
     public double calcularTotal(double[] valores) {
