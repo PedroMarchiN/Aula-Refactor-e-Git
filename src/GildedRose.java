@@ -5,6 +5,11 @@ public class GildedRose {
         this.items = items;
     }
 
+    /*
+        Primeiramente tentei dividir em subrotinas, mas logo percebi que fazia mais sentido separar por item,
+        visto que tem itens que não mudam quase nada e outros que passam por diversas verificações. Maior parte dos
+        if eram checando os nomes dos itens, então só de fazer o switch case o código já ficou bem mais limpo.
+     */
     public void updateQuality() {
 
         for (int i = 0; i < items.length; i++) {
