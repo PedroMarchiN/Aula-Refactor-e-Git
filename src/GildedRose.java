@@ -23,39 +23,94 @@ public class GildedRose {
     }
 
 
-
-
-
     private void caseAgedBrie(int i){
+        items[i].sellIn--;
+
+        if (items[i].quality < 50) {
+            items[i].quality++;
+        }
+
+        if (items[i].sellIn < 0 && items[i].quality < 50) {
+            items[i].quality++;
+        }
     }
 
     private void caseDexterityVest(int i){
+        items[i].sellIn--;
+
+        if (items[i].quality > 0) {
+            items[i].quality--;
+        }
+
+        if (items[i].sellIn < 0 && items[i].quality > 0) {
+            items[i].quality--;
+        }
     }
 
     private void caseSulfurasRagnaros(int i){
+        //it looks like this is one does nothing :)
     }
 
     private void casePerishableFruit(int i){
+        items[i].sellIn--;
+
+        if (items[i].quality > 0) {
+            items[i].quality -= 2;
+        }
+
+        if (items[i].sellIn < 0 && items[i].quality > 0) {
+            items[i].quality -= 2;
+        }
     }
 
     private void caseElixirMongoose(int i){
+        items[i].sellIn--;
+
+        if (items[i].quality > 0) {
+            items[i].quality--;
+        }
+
+        if (items[i].sellIn < 0 && items[i].quality > 0) {
+            items[i].quality--;
+        }
     }
 
     private void caseEternalArtifact(int i) {
+
+        if (items[i].quality > 0 && items[i].quality < 50) {
+            items[i].quality++;
+        }
+
+        if (items[i].sellIn % 2 == 0) {
+            items[i].quality++;
+        }
+
     }
 
     private void caseConjuredManaCake(int i) {
+        items[i].sellIn--;
+
+        if (items[i].quality > 0) {
+            items[i].quality += 2;
+        }
+
+        if (items[i].sellIn < 0 && items[i].quality > 0) {
+            items[i].quality -= 2;
+        }
     }
 
     private void caseBackstagePasses(int i) {
-    }
+        items[i].sellIn--;
 
-    private boolean isQualityOverZero(int i) {
-        return items[i].quality > 0;
-    }
-
-    private boolean isQualityUnderLimit(int i) {
-        return items[i].quality < 50;
+        if (items[i].quality < 50) {
+            items[i].quality++;
+            if (items[i].sellIn < 10 && items[i].quality < 50) {
+                items[i].quality++;
+            }
+            if (items[i].sellIn < 5 && items[i].quality < 50) {
+                items[i].quality++;
+            }
+        }
     }
 
     private void ensureQualityBounds(int i) {
