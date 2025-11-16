@@ -9,28 +9,22 @@ public class GildedRose {
 
         for (int i = 0; i < items.length; i++) {
             //*****************
-            if (!items[i].name.equals("Aged Brie")
-                    && !items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")
-                    && !items[i].name.equals("Conjured Mana Cake")
-                    && !items[i].name.equals("Eternal Artifact")) {
-                if (items[i].quality > 0) {
-                    if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
+            if (isNotSpecialItem(i)){
+                if (isQualityOverZero(i)) {
+                    items[i].quality = items[i].quality - 1;
+                    // Additional degradation for perishable items
+                    if (items[i].name.contains("Perishable")) {
                         items[i].quality = items[i].quality - 1;
-                        // Additional degradation for perishable items
-                        if (items[i].name.contains("Perishable")) {
-                            items[i].quality = items[i].quality - 1;
-                        }
                     }
                 }
             } else {
-                if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1;
-                    if (items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        caseBackstagePasses(i);
-                    } else if (items[i].name.equals("Conjured Mana Cake")) {
-                        caseConjuredManaCake(i);
-                    } else if (items[i].name.equals("Eternal Artifact")) {
-                        caseEternalArtifact(i);
+                if (isQualityUnderLimit(i)) {
+                    if(!items[i].name.equals("Sulfuras, Hand of Ragnaros"))
+                        items[i].quality = items[i].quality + 1;
+                    switch (items[i].name) {
+                        case "Backstage passes to a TAFKAL80ETC concert" -> caseBackstagePasses(i);
+                        case "Conjured Mana Cake" -> caseConjuredManaCake(i);
+                        case "Eternal Artifact" -> caseEternalArtifact(i);
                     }
                 }
             }
@@ -44,7 +38,7 @@ public class GildedRose {
             if (items[i].sellIn < 0) {
                 if (!items[i].name.equals("Aged Brie")) {
                     if (!items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].quality > 0) {
+                        if (isQualityOverZero(i)) {
                             if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
                                 items[i].quality = items[i].quality - 1;
                                 if (items[i].name.equals("Conjured Mana Cake")) {
@@ -60,7 +54,7 @@ public class GildedRose {
                         items[i].quality = items[i].quality - items[i].quality;
                     }
                 } else {
-                    if (items[i].quality < 50) {
+                    if (isQualityUnderLimit(i)) {
                         items[i].quality = items[i].quality + 1;
                     }
                 }
@@ -73,6 +67,22 @@ public class GildedRose {
             // Ensure quality bounds
             ensureQualityBounds(i);
         }
+    }
+
+    private boolean isQualityOverZero(int i) {
+        return items[i].quality > 0;
+    }
+
+    private boolean isQualityUnderLimit(int i) {
+        return items[i].quality < 50;
+    }
+
+    private boolean isNotSpecialItem(int i) {
+        return !items[i].name.equals("Aged Brie")
+                && !items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")
+                && !items[i].name.equals("Conjured Mana Cake")
+                && !items[i].name.equals("Eternal Artifact")
+                && !items[i].name.equals("Sulfuras, Hand of Ragnaros");
     }
 
     private void caseEternalArtifact(int i) {
@@ -89,12 +99,12 @@ public class GildedRose {
 
     private void caseBackstagePasses(int i) {
         if (items[i].sellIn < 11) {
-            if (items[i].quality < 50) {
+            if (isQualityUnderLimit(i)) {
                 items[i].quality = items[i].quality + 1;
             }
         }
         if (items[i].sellIn < 6) {
-            if (items[i].quality < 50) {
+            if (isQualityUnderLimit(i)) {
                 items[i].quality = items[i].quality + 1;
             }
         }
